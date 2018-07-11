@@ -23,7 +23,7 @@ public class Player : MonoBehaviour {
   }
 
   void InitVars() {
-    playerSpeed = 3f;
+    playerSpeed = 5f;
     am = gameObject.GetComponent<Animator>();
     rb = gameObject.GetComponent<Rigidbody2D>();
   }
@@ -37,8 +37,8 @@ public class Player : MonoBehaviour {
   }
 
   void MovePlayer() {
-    float horizontal = Input.GetAxis("Horizontal");
-    float vertical = Input.GetAxis("Vertical");
+    float horizontal = Input.GetAxisRaw("Horizontal");
+    float vertical = Input.GetAxisRaw("Vertical");
     Vector3 move = new Vector3(horizontal, vertical, 0f);
     Vector3 position = transform.position;
 
