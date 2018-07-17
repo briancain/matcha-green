@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 
   private Animator am;
   private Rigidbody2D rb;
+  private bool isIdle;
 
   private enum PlayerDirection {
     NORTH,
@@ -24,15 +25,12 @@ public class Player : MonoBehaviour {
 
   void InitVars() {
     playerSpeed = 5f;
+    isIdle = true;
     am = gameObject.GetComponent<Animator>();
     rb = gameObject.GetComponent<Rigidbody2D>();
   }
 
   void SetPlayerDirection(PlayerDirection dir){
-    if (PlayerDirection.IsDefined(typeof(PlayerDirection), dir)) {
-      Debug.LogError("Given an invalid player direction: " + dir);
-    }
-
     playerDir = dir;
   }
 
@@ -43,15 +41,19 @@ public class Player : MonoBehaviour {
     Vector3 position = transform.position;
 
     if (move.y > 0) {
+      SetPlayerDirection(PlayerDirection.NORTH);
       position += Vector3.up;
     }
     if (move.y < 0) {
+      SetPlayerDirection(PlayerDirection.SOUTH);
       position += Vector3.down;
     }
     if (move.x > 0) {
+      SetPlayerDirection(PlayerDirection.EAST);
       position += Vector3.right;
     }
     if (move.x < 0) {
+      SetPlayerDirection(PlayerDirection.WEST);
       position += Vector3.left;
     }
 
