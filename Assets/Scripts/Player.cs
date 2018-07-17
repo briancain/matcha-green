@@ -32,6 +32,33 @@ public class Player : MonoBehaviour {
 
   void SetPlayerDirection(PlayerDirection dir){
     playerDir = dir;
+
+    switch(playerDir) {
+      case PlayerDirection.NORTH:
+        am.SetBool("Backward", true);
+        am.SetBool("Forward", false);
+        am.SetBool("Right", false);
+        am.SetBool("Left", false);
+        break;
+      case PlayerDirection.SOUTH:
+        am.SetBool("Forward", true);
+        am.SetBool("Backward", false);
+        am.SetBool("Right", false);
+        am.SetBool("Left", false);
+        break;
+      case PlayerDirection.EAST:
+        am.SetBool("Right", true);
+        am.SetBool("Backward", false);
+        am.SetBool("Forward", false);
+        am.SetBool("Left", false);
+        break;
+      case PlayerDirection.WEST:
+        am.SetBool("Left", true);
+        am.SetBool("Backward", false);
+        am.SetBool("Right", false);
+        am.SetBool("Forward", false);
+        break;
+    }
   }
 
   void MovePlayer() {
@@ -39,6 +66,14 @@ public class Player : MonoBehaviour {
     float vertical = Input.GetAxisRaw("Vertical");
     Vector3 move = new Vector3(horizontal, vertical, 0f);
     Vector3 position = transform.position;
+
+    if (move.y == 0f && move.x == 0f) {
+      isIdle = true;
+    } else {
+      isIdle = false;
+    }
+    am.SetBool("Idle", isIdle);
+
 
     if (move.y > 0) {
       SetPlayerDirection(PlayerDirection.NORTH);
