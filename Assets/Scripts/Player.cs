@@ -62,8 +62,21 @@ public class Player : MonoBehaviour {
   }
 
   void MovePlayer() {
-    float horizontal = Input.GetAxisRaw("Horizontal");
-    float vertical = Input.GetAxisRaw("Vertical");
+    float horizontal = 0f;
+    float vertical = 0f;
+
+    // Ensure that player moves in a single direction
+    if (Input.GetAxisRaw("Vertical") != 0 && Input.GetAxisRaw("Horizontal") != 0) {
+      if (Input.GetAxisRaw("Vertical") !=  0) {
+        horizontal = Input.GetAxisRaw("Horizontal");
+      } else if (Input.GetAxisRaw("Horizontal") !=  0) {
+        vertical = Input.GetAxisRaw("Vertical");
+      }
+    } else {
+      horizontal = Input.GetAxisRaw("Horizontal");
+      vertical = Input.GetAxisRaw("Vertical");
+    }
+
     Vector3 move = new Vector3(horizontal, vertical, 0f);
     Vector3 position = transform.position;
 
