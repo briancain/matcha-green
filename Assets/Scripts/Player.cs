@@ -30,7 +30,24 @@ public class Player : MonoBehaviour {
     rb = gameObject.GetComponent<Rigidbody2D>();
   }
 
-  void SetPlayerDirection(PlayerDirection dir){
+
+  /*
+    Redo animation controller
+    Instead do...
+
+              Up
+              ^
+             |||
+              v
+    Left <=> Idle <=> Right
+              ^
+             |||
+              v
+             Down
+    With entry pointed to idle. Have two floats for horizontal and vertical
+    direction and edit transitions this way. Double arrows for every state.
+   */
+  void SetPlayerDirection(PlayerDirection dir, Vector3 moveDir){
     playerDir = dir;
 
     switch(playerDir) {
@@ -89,19 +106,19 @@ public class Player : MonoBehaviour {
 
 
     if (move.y > 0) {
-      SetPlayerDirection(PlayerDirection.NORTH);
+      SetPlayerDirection(PlayerDirection.NORTH, move);
       position += Vector3.up;
     }
     if (move.y < 0) {
-      SetPlayerDirection(PlayerDirection.SOUTH);
+      SetPlayerDirection(PlayerDirection.SOUTH, move);
       position += Vector3.down;
     }
     if (move.x > 0) {
-      SetPlayerDirection(PlayerDirection.EAST);
+      SetPlayerDirection(PlayerDirection.EAST, move);
       position += Vector3.right;
     }
     if (move.x < 0) {
-      SetPlayerDirection(PlayerDirection.WEST);
+      SetPlayerDirection(PlayerDirection.WEST, move);
       position += Vector3.left;
     }
 
