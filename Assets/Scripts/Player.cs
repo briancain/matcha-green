@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
   private Animator am;
   private Rigidbody2D rb;
   private bool isIdle;
+  private bool playerCollide;
 
   private enum PlayerDirection {
     NORTH,
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour {
   void InitVars() {
     playerSpeed = 5f;
     isIdle = true;
+    playerCollide = false;
     am = gameObject.GetComponent<Animator>();
     rb = gameObject.GetComponent<Rigidbody2D>();
   }
@@ -131,6 +133,18 @@ public class Player : MonoBehaviour {
   // Update is called once per frame
   void Update () {
     MovePlayer();
+  }
+
+  void OnCollisionEnter2D(Collision2D col) {
+    if (col.gameObject.tag == "Background") {
+      playerCollide = true;
+    }
+  }
+
+  void OnCollisionExit2D(Collision2D col) {
+    if (col.gameObject.tag == "Background") {
+      playerCollide = false;
+    }
   }
 
 }
